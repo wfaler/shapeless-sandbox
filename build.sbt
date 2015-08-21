@@ -1,5 +1,5 @@
 
-name := "rules"
+name := "jdbc-shapeless"
 
 version := "0.1"
 

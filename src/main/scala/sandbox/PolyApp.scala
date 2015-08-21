@@ -10,6 +10,7 @@ object PolyApp extends App{
 
   val fooGen = Generic[Foo]
 
+
   object size extends Poly1 {
     implicit def caseInt = at[Int](x => 1)
     implicit def caseString = at[String](_.length)
@@ -18,15 +19,16 @@ object PolyApp extends App{
       at[(T, U)](t => size(t._1)+size(t._2))
   }
 
+  implicit def caseLong = size.at[Long](x => Foo(x.toInt,2))
+
   object printL extends Poly1 {
     implicit def caseInt = at[Int](x => println("int: " +1))
     implicit def caseString = at[String](println)
   }
 
 
-  val l = 23 :: "foo" :: HNil
+  val l = 23 :: "foo" :: 5L :: HNil
 
-  val rec = l map printL
-//  val foo = fooGen.from(rec)
+  val rec = l map size
   println(rec)
 }
